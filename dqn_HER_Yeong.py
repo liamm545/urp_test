@@ -60,7 +60,7 @@ class DQN_HER:
         sum_r = 0
         mean_loss = mean_val()
         min_dist = 100000
-        max_t = 100
+        max_t = 90
         
         ############################################
         trajectory = [obs]
@@ -103,10 +103,10 @@ class DQN_HER:
                 print('updated target model')
                 
                 
-        ##################################
-        if i % 20 ==0:
+        #################################
+        if i % 2 ==0:
             self.visualize_episode(trajectory)        
-        ##################################
+        #################################
 
         her_list = self.her.backward()
         for item in her_list:
@@ -122,7 +122,7 @@ class DQN_HER:
         state = self.env.get_tensor(obs)
         sum_r = 0
         min_dist = 100000
-        max_t = 100
+        max_t = 90
 
         for t in range(max_t):
             self.eps = 1.0
