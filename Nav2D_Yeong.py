@@ -96,8 +96,17 @@ class Navigate2D:
         start = (39,int((left_start_x+right_start_x)/2))
         finish = (0,int((left_end_x+right_end_x)/2))
 
+        finish_range = range(int((left_end_x + right_end_x) / 2) - 2, int((left_end_x + right_end_x) / 2) + 3)
+        finish_points = [(0, x) for x in finish_range]
+
+
+        for point in finish_points:
+            grid[point[0], point[1], 2] = self.scale*1.0
+            grid[point[0]+1, point[1], 2] = self.scale*1.0
+            grid[point[0]+2, point[1], 2] = self.scale*1.0
+
         grid[start[0],start[1],1] = self.scale*1.0
-        grid[finish[0],finish[1],2] = self.scale*1.0
+        # grid[finish[0],finish[1],2] = self.scale*1.0
         done = False
         # imshow(grid)
         # plt.pyplot.show()
@@ -129,7 +138,7 @@ class Navigate2D:
         if (np.any(new_pos < 0.0) or new_pos[1] > (40 - 1) or new_pos[0] > (40 -1)):
             #dist = np.linalg.norm(pos - target)
             #reward = (dist1 - dist2)
-            reward += -5.0
+            # reward += -5.0
             return grid, reward, done, dist2
         
         # if (grid[new_pos[0],new_pos[1],0] == 1.0):
@@ -148,7 +157,7 @@ class Navigate2D:
         new_grid[new_pos[0],new_pos[1],1] = self.scale*1.0
         
         if ((new_pos[0] == target[0]) and (new_pos[1] == target[1])):
-            reward += 100.0
+            reward = 100.0
             done = True
         #dist = np.linalg.norm(new_pos - target)
         #reward = (dist1 - dist2)
