@@ -104,8 +104,8 @@ class DQN_HER:
                 
                 
         #################################
-        # if i % 2 ==0:
-        #     self.visualize_episode(trajectory)        
+        if i % 2 ==0:
+            self.visualize_episode(trajectory)        
         #################################
 
         her_list = self.her.backward()
@@ -203,8 +203,10 @@ class DQN_HER:
         initial = np.argwhere(trajectory[0][:, :, 1] == self.env.scale)[0]
         img[initial[0], initial[1]] = [0, 255, 0]  #시작 위치
         
-        target = np.argwhere(trajectory[0][:, :, 2] == self.env.scale)[0]
-        img[target[0], target[1]] = [0, 0, 255]  #목표 위치
+        target = np.argwhere(trajectory[0][:, :, 2] == self.env.scale)
+        for t in target:
+            # print(t)
+            img[t[0],t[1]] = [0,0,255]
 
         plt.imshow(img)
         plt.pause(0.1)
