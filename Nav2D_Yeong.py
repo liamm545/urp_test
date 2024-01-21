@@ -18,6 +18,9 @@ from collections import deque
 LEFT_POINT = (9, 19)
 RIGHT_POINT = (29, 19)
 
+# 장애물 마진 크기
+OBSTACLE_SURPLUS = 2
+
 class Navigate2D:
     def __init__(self,Nobs,Dobs,Rmin):
         self.W = 40
@@ -76,11 +79,11 @@ class Navigate2D:
             maxY = center_y + 2
             grid[minY:maxY+1,minX:maxX+1,0] = 1.0
             
-            # labacorn surplus 생성
-            grid[minY-1:minY,minX-1:maxX+1+1,0] = 255.0
-            grid[minY:maxY+1,minX-1:minX,0] = 255.0
-            grid[minY:maxY+1,maxX+1:maxX+1+1,0] = 255.0
-            grid[maxY+1:maxY+1+1,minX-1:maxX+1+1,0] = 255.0
+           # labacorn surplus 생성
+            grid[minY-OBSTACLE_SURPLUS:minY,minX-OBSTACLE_SURPLUS:maxX+OBSTACLE_SURPLUS+1,0] = 255.0
+            grid[minY:maxY+1,minX-OBSTACLE_SURPLUS:minX,0] = 255.0
+            grid[minY:maxY+1,maxX+1:maxX+OBSTACLE_SURPLUS+1,0] = 255.0
+            grid[maxY+1:maxY+OBSTACLE_SURPLUS+1,minX-OBSTACLE_SURPLUS:maxX+OBSTACLE_SURPLUS+1,0] = 255.0
 
         # lane surplus 생성
         cv2.line(grid, (left_end_x-1,left_end_y),(left_start_x-1,left_start_y),
@@ -98,12 +101,10 @@ class Navigate2D:
 
         finish_range = range(int((left_end_x + right_end_x) / 2) - 2, int((left_end_x + right_end_x) / 2) + 3)
         finish_points = [(0, x) for x in finish_range]
-
+        # print(finish_points)
 
         for point in finish_points:
             grid[point[0], point[1], 2] = self.scale*1.0
-            grid[point[0]+1, point[1], 2] = self.scale*1.0
-            grid[point[0]+2, point[1], 2] = self.scale*1.0
 
         grid[start[0],start[1],1] = self.scale*1.0
         # grid[finish[0],finish[1],2] = self.scale*1.0
