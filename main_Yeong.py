@@ -20,7 +20,7 @@ from copy import deepcopy as dc
 from collections import deque
 
 
-Nobs = 2
+Nobs = 1
 Dobs = 3
 Rmin = 10
 env = Navigate2D(Nobs,Dobs,Rmin)
@@ -28,7 +28,7 @@ gamma = 0.99
 buffer_size = 1000000
 ddqn = True
 alg = DQN_HER(env, gamma, buffer_size, ddqn)
-epochs = 20000
+epochs = 10000
 distances = deque(maxlen=100)
 
 n_data = 1000
