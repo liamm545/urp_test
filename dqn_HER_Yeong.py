@@ -104,8 +104,8 @@ class DQN_HER:
                 
                 
         #################################
-        if i % 2 ==0:
-            self.visualize_episode(trajectory)        
+        # if i % 2 ==0:
+        #     self.visualize_episode(trajectory)        
         #################################
 
         her_list = self.her.backward()
